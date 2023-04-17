@@ -1,4 +1,6 @@
+using AutoMapper;
 using HrApi.Domain;
+using HrApi.Profiles;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,14 @@ builder.Services.AddDbContext<HrDataContext>(options =>
 {
     options.UseSqlServer(hrConnectionString);
 });
+
+var mapperConfiguration = new MapperConfiguration(options =>
+{
+    options.AddProfile<Departments>();
+});
+
+builder.Services.AddSingleton<IMapper>(mapperConfiguration.CreateMapper());
+builder.Services.AddSingleton<MapperConfiguration>(mapperConfiguration);
 
 var app = builder.Build();
 
