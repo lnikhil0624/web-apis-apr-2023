@@ -4,9 +4,9 @@ namespace HrApi.Domain;
 
 public class HrDataContext : DbContext
 {
-    public HrDataContext(DbContextOptions<HrDataContext> options) : base(options)
+    public HrDataContext(DbContextOptions<HrDataContext> options): base(options)
     {
-
+        
     }
 
     // All of the entity classes it should track in the database
@@ -15,15 +15,10 @@ public class HrDataContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DepartmentEntity>().Property(p => p.Name)
-        .HasMaxLength(20);
-
-
+            .HasMaxLength(20);
 
         modelBuilder.Entity<DepartmentEntity>()
-        .HasIndex(b => b.Name).IsUnique();
-
-
+            .HasIndex(b => b.Name).IsUnique();
 
     }
-
 }
