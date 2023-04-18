@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using HrApi.Domain;
 using HrApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper.QueryableExtensions;
 
 namespace HrApi.Controllers;
 
@@ -24,15 +24,12 @@ public class DepartmentsController : ControllerBase
     [HttpPost("/departments")]
     public async Task<ActionResult> AddADepartment([FromBody] DepartmentCreateRequest request)
     {
+
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState); // 400
 
-
-
         }
-        // go to the database and see if there is already a department that name.
-
 
 
 
@@ -44,7 +41,7 @@ public class DepartmentsController : ControllerBase
             var response = _mapper.Map<DepartmentSummaryItem>(departmentToAdd);
             return Ok(response);
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
             return BadRequest("That Department Exists");
         }
